@@ -3,7 +3,6 @@ import shutil
 import json
 import glob
 
-
 def create_tree():
     os.mkdir("Output")
     os.mkdir("Output/assets")
@@ -80,6 +79,9 @@ def rp_create():
 
     for image in os.listdir("Output/assets/minecraft/textures/item/"):
         os.rename("Output/assets/minecraft/textures/item/" + image,"Output/assets/minecraft/textures/item/" + image.split("!")[0] + ".png")
+
+    shutil.make_archive("pack","zip","Output")
+
 
 print("Welcome to ResourcePacker please choose an option: ")
 print("1: Tutorial")
