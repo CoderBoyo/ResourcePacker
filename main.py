@@ -65,26 +65,30 @@ def rp_create():
 
         file = open("Output/assets/minecraft/models/item/" + item + ".json", "a")
 
+        finalStr = ""
+
         if item not in material:
             materialData = '''{
                 "parent": "item/handheld",
                 "textures": {
-                    "layer0": "item/" + item
+                    "layer0": "item/"''' + item + '''
                 },
                 "overrides": ['''
-            file.write(json.dumps(materialData.replace('''\\''', "", 100).replace(" ", "", 10000), indent=2))
+            finalStr += materialData.replace(" ", "").replace('\n', "").replace('\"', "")
 
         material.add(item)
 
         modelData = '''
                 {
                     "predicate": {
-                        "custom_model_data": cmd
+                        "custom_model_data": ''' + cmd + '''
                     },
-                    "model": "item/texture_models/" + name
+                    "model": "item/texture_models/"''' + name + '''
                 },'''
 
-        file.write(json.dumps(modelData, indent=2))
+        finalStr += modelData.replace(" ", "").replace('\n', "").replace('\"', "")
+
+        file.write(json.dumps(finalStr, indent=2).replace('"', ""))
 
     for image in glob.iglob(os.path.join("Files", "*.png")):
         shutil.copy(image, "Output/assets/minecraft/textures/item/")
@@ -115,3 +119,4 @@ while True:
     if int(input("Select Option: ")) == 3:
         print("\n")
         rp_create()
+
